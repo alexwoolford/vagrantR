@@ -19,7 +19,7 @@ exec { "apt-update":
 
 Exec["apt-update"] -> Package <| |>
 
-package { "r-base":
+package { "r-base-core":
   ensure  => latest,
   require  => Exec['apt-update'],
 }
@@ -27,12 +27,6 @@ package { "r-base":
 package { "littler":
   ensure  => latest,
 }
-
-
-exec {
-    command => "r -e \"install.packages('forecast', repos='http://cran.rstudio.com')\""
-}
-
 
 
 /*
