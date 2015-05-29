@@ -14,14 +14,13 @@ apt::source { 'R':
 }
 
 exec { "apt-update":
-    command => "/usr/bin/apt-get update"
+  command => "/usr/bin/apt-get update",
+  require => Apt::Source['R'],
 }
 
-Exec["apt-update"] -> Package <| |>
-
-package { "r-base-core":
+package { "r-base":
   ensure  => latest,
-  require  => Exec['apt-update'],
+  require => Apt::Source['R'],
 }
 
 package { "littler":
@@ -34,9 +33,9 @@ package { "littler":
 
 
 
-#exec { "apt-update":
-#    command => "r -e \"install.packages('forecast', repos='http://cran.rstudio.com')\""
-#}
+exec { "apt-update":
+    command => "r -e \"install.packages('forecast', repos='http://cran.rstudio.com')\""
+}
 
 #r -e "install.packages('forecast', repos='http://cran.rstudio.com')"
 #r -e "install.packages('RMySQL', repos='http://cran.rstudio.com')"
