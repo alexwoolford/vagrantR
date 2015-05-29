@@ -1,14 +1,11 @@
 # vagrantR
 
+Installs R on an Vagrant/Puppet provisioned Ubuntu VM and installs some packages to connect to MySQL (`RMySQL`), wrangle data (`dplyr`), and do some timeseries analysis (`forecast`).
+
 Pre-requisites:
 - Puppet
 - Virtualbox
 - Vagrant w/ the ubuntu/trusty64 box
-
-TODO:
-- Fix issue where puppet installs the version of R from Ubuntu's repo rather than the latest version from CRAN.
-- Get Puppet to install `littler` and some R packages (`forecast`, `RMySQL`, and `dplyr`)
-
 
 To try this VM:
 
