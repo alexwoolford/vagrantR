@@ -20,20 +20,24 @@ user { 'vagrant':
   groups => ["vagrant", "staff"]
 }
 
+package { 'libmysqlclient-dev':
+  ensure => latest,
+}
+
 class { 'r': 
   require => Apt::Source['R'],
 }
 
 r::package { 'forecast': 
-  dependencies => true
+  dependencies => true,
 }
 
 r::package { 'dplyr': 
-  dependencies => true
+  dependencies => true,
 }
 
 r::package { 'RMySQL': 
-  dependencies => true
+  dependencies => true,
 }
 
 package { "littler":
