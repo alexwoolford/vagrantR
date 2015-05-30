@@ -28,6 +28,31 @@ class { 'r':
   require => Apt::Source['R'],
 }
 
+package { 'libcurl4-gnutls-dev':
+  ensure => latest,
+}
+
+package { 'libcurl4-openssl-dev':
+  ensure => latest,
+}
+
+package { 'libxml2-dev':
+  ensure => latest,
+}
+
+r::package { 'devtools': 
+  dependencies => true,
+}
+
+package { "littler":
+  ensure  => latest,
+}
+
+exec { "install_RDruid":
+  command => "/usr/bin/r -e \"devtools::install_github(\\\"metamx/RDruid\\\")\"",
+  require => Package['littler'],
+}
+
 r::package { 'forecast': 
   dependencies => true,
 }
@@ -38,8 +63,4 @@ r::package { 'dplyr':
 
 r::package { 'RMySQL': 
   dependencies => true,
-}
-
-package { "littler":
-  ensure  => latest,
 }
