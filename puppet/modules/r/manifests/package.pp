@@ -7,7 +7,7 @@ define r::package($r_path = "/usr/bin/R", $repo = "http://cran.rstudio.com", $de
     },
     unless  => "$r_path -q -e '\"$name\" %in% installed.packages()' | grep 'TRUE'",
     require => Class['r'],
-    timeout => 600,
+    timeout => 900,
   }
 
 }

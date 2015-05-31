@@ -13,22 +13,25 @@ apt::source { 'R':
 exec { 'apt-update':
   command => '/usr/bin/apt-get update',
 } ->
+package { "littler":
+  ensure  => latest,
+} ->
 user { 'vagrant':
   groups => ["vagrant", "staff"]
 } ->
-class { 'r': 
+class { 'r':
   require => Apt::Source['R'],
-} -> 
+} ->
+r::package { 'dplyr':
+  dependencies => true,
+} ->
 package { 'libmysqlclient-dev':
   ensure => latest,
 } ->
-r::package { 'RMySQL': 
+r::package { 'RMySQL':
   dependencies => true,
 } ->
-r::package { 'dplyr': 
-  dependencies => true,
-} ->
-r::package { 'forecast': 
+r::package { 'forecast':
   dependencies => true,
 } ->
 package { 'libcurl4-gnutls-dev':
@@ -40,13 +43,11 @@ package { 'libcurl4-openssl-dev':
 package { 'libxml2-dev':
   ensure => latest,
 } ->
-r::package { 'devtools': 
+r::package { 'devtools':
+  r_path => "/usr/bin/r",
   dependencies => true,
-} ->
-package { "littler":
-  ensure  => latest,
 } ->
 exec { "install_RDruid":
   command => "/usr/bin/r -e \"devtools::install_github(\\\"metamx/RDruid\\\")\"",
+  creates => "/usr/local/lib/R/site-library/RDruid",
 }
-
